@@ -12,6 +12,11 @@ CREATE TABLE authors
 )
 GO
 
+--Make email column as UNIQUE by ALTER statement.
+ALTER TABLE authors
+ADD CONSTRAINT U_email UNIQUE(email)
+GO
+
 
 CREATE TABLE tags
 (
@@ -27,6 +32,11 @@ CREATE TABLE publishers
 	publisherName VARCHAR(100) NOT NULL,
 	publisherEmail VARCHAR(100) NOT NULL
 )
+GO
+
+--Make publisherEmail column as UNIQUE by ALTER statement.
+ALTER TABLE publishers
+ADD CONSTRAINT u_publisherEmail UNIQUE(publisherEmail)
 GO
 
 
