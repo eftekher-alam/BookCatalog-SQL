@@ -59,7 +59,7 @@ END
 --------------->>>>Instead of trigger for delete book<<<<-------------
 		-- Aim : To delete a book record we have to delete corrisponding records which is into other table as FK otherwise we can delete.
 
-CREATE OR ALTER TRIGGER st_book_delete
+CREATE OR ALTER TRIGGER tr_book_delete
 ON books
 INSTEAD OF DELETE
 AS
@@ -76,6 +76,53 @@ BEGIN
 			--When the record doesn't have any FK then delete from books table
 			DELETE FROM books
 			WHERE bookId = (SELECT bookId FROM deleted)
+	END TRY
+	BEGIN CATCH
+	END CATCH
+END
+
+
+--------------->>>>Instead of trigger for delete tags<<<<-------------
+		-- Aim : To delete a tag record we have to delete corrisponding records which is into other table as FK otherwise we can delete.
+
+CREATE OR ALTER TRIGGER tr_tag_delete
+ON tags
+INSTEAD OF DELETE
+AS
+BEGIN
+	BEGIN TRY
+			--Firstly the specific book FK delete from booksAuthors table
+			DELETE FROM booksTags
+			WHERE tagId = (SELECT tagId FROM deleted)
+
+			--When the record doesn't have any FK then delete from books table
+			DELETE FROM tags
+			WHERE tagId = (SELECT tagId FROM deleted)
+	END TRY
+	BEGIN CATCH
+	END CATCH
+END
+
+
+
+
+
+--------------->>>>Instead of trigger for delete AUTHORS<<<<-------------
+		-- Aim : To delete a AUTHOR record we have to delete corrisponding records which is into other table as FK otherwise we can delete.
+
+CREATE OR ALTER TRIGGER tr_author_delete
+ON authors
+INSTEAD OF DELETE
+AS
+BEGIN
+	BEGIN TRY
+			--Firstly the specific book FK delete from booksAuthors table
+			DELETE FROM booksAuthors
+			WHERE authorId = (SELECT authorId FROM deleted)
+
+			--When the record doesn't have any FK then delete from books table
+			DELETE FROM authors
+			WHERE authorId = (SELECT authorId FROM deleted)
 	END TRY
 	BEGIN CATCH
 	END CATCH
