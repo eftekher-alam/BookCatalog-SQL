@@ -57,6 +57,7 @@ END
 
 
 --------------->>>>Instead of trigger for delete book<<<<-------------
+		-- Aim : To delete a book record we have to delete corrisponding records which is into other table as FK otherwise we can delete.
 
 CREATE OR ALTER TRIGGER st_book_delete
 ON books
@@ -64,12 +65,15 @@ INSTEAD OF DELETE
 AS
 BEGIN
 	BEGIN TRY
+			--Firstly the specific book FK delete from booksAuthors table
 			DELETE FROM booksAuthors
 			WHERE bookId = (SELECT bookId FROM deleted)
 
+			--Secondly the specific book FK delete from booksTags table
 			DELETE FROM booksTags
 			WHERE bookId = (SELECT bookId FROM deleted)
 
+			--When the record doesn't have any FK then delete from books table
 			DELETE FROM books
 			WHERE bookId = (SELECT bookId FROM deleted)
 	END TRY
