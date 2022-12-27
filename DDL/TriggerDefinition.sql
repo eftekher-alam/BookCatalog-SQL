@@ -53,3 +53,26 @@ BEGIN
 			SELECT ERROR_MESSAGE() AS 'ERROR MASSAGE', ERROR_LINE() AS 'ERROR LINE'
 		END CATCH
 END
+
+
+
+--------------->>>>Instead of trigger for delete book<<<<-------------
+
+CREATE OR ALTER TRIGGER st_book_delete
+ON books
+INSTEAD OF DELETE
+AS
+BEGIN
+	BEGIN TRY
+			DELETE FROM booksAuthors
+			WHERE bookId = (SELECT bookId FROM deleted)
+
+			DELETE FROM booksTags
+			WHERE bookId = (SELECT bookId FROM deleted)
+
+			DELETE FROM books
+			WHERE bookId = (SELECT bookId FROM deleted)
+	END TRY
+	BEGIN CATCH
+	END CATCH
+END
