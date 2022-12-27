@@ -234,7 +234,7 @@ END
 ------------------------>>>> PUBLISHER PROCEDURE <<<<------------------------
 
 
---> INSERT AUTHORS PROCEDURE <--
+--> INSERT PUBLISHER PROCEDURE <--
 	-- Here we have used OUTPUT variable
 
 CREATE OR ALTER PROCEDURE sp_insertPublisher --If not exist it will create other wise alter the existing sp
@@ -261,7 +261,7 @@ END
 
 
 
---> UPDATE AUTHOR PROCEDURE <--
+--> UPDATE PULISHER PROCEDURE <--
 CREATE OR ALTER PROCEDURE sp_UpdatePublisher
 (
 	@Id INT,
@@ -288,7 +288,7 @@ END
 
 
 
---> DELETE AUTHOR PROCEDURE <--
+--> DELETE PUBLISEHR PROCEDURE <--
 	--Tags will delete even if tagid exist in other table as FK record because there is trigger that will delete the FK record
 CREATE OR ALTER PROCEDURE sp_DeletePublisher
 (
