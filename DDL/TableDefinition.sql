@@ -66,3 +66,18 @@ CREATE TABLE booksAuthors
 	PRIMARY KEY(bookId, authorId)
 )
 GO
+
+
+CREATE TABLE booksArchive
+(
+	bookArchiveId INT  IDENTITY(1, 1) PRIMARY KEY,
+	bookId INT,
+	title VARCHAR(100) NOT NULL,
+	coverPrice MONEY NOT NULL,
+	publishDate DATE NOT NULL,
+	available BIT DEFAULT 0,
+	publisherId INT NOT NULL,
+	actions VARCHAR(10) NOT NULL,
+	dateTime DATETIME DEFAULT GETDATE()
+)
+GO
