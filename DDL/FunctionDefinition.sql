@@ -1,4 +1,5 @@
-
+USE BookCatalog
+GO
 ----->> Author wise all Information (Simple table-valued function) <<-------
 	--This function will return a table
 CREATE OR ALTER FUNCTION fn_AuthorWiseInfo
@@ -57,6 +58,21 @@ BEGIN
 END
 
 
-SELECT * FROM booksTags
-SELECT * FROM tags
-SELECT * FROM dbo.fn_TagWiseBooks('Programming')
+
+----->> Total book of given authers(Scaler-valued function) <<-------
+
+CREATE OR ALTER FUNCTION fn_author_totalBook
+(
+	@authorName NVARCHAR(100)
+)
+RETURNS INT
+AS
+BEGIN
+	RETURN 
+	(
+	SELECT COUNT(*)
+	FROM authors a
+	INNER JOIN booksAuthors ba ON ba.authorId = a.authorId
+	WHERE UPPER(a.authorName) LIKE '%' + UPPER(@authorName) + '%'
+	)
+END
